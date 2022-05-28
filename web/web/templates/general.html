@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+{% block content %}
+	<p>
+		<h1 style = "color: black">Apartado General</h1>  
+	</p>
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+
+				<table id="example" class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th colspan="2">Taxonomia</th>
+						<th>Caracteristicas</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for t in taxonomia.items %}
+						<tr>
+							<td class="table-success col-md-2">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-success"> Dominio </li>
+									<li class="list-group-item list-group-item-success"> Reino </li>
+									<li class="list-group-item list-group-item-success"> Subreino </li>
+									<li class="list-group-item list-group-item-success"> Superfilo </li>
+									<li class="list-group-item list-group-item-success"> Filo </li>
+									<li class="list-group-item list-group-item-success"> Subfilo </li>
+									<li class="list-group-item list-group-item-success"> Superclase </li>
+									<li class="list-group-item list-group-item-success"> Clase </li>
+									<li class="list-group-item list-group-item-success"> Subclase </li>
+									<li class="list-group-item list-group-item-success"> Orden </li>
+									<li class="list-group-item list-group-item-success"> Familia </li>
+									<li class="list-group-item list-group-item-success"> Genero </li>
+									<li class="list-group-item list-group-item-success"> Especie </li>
+									<li class="list-group-item list-group-item-success"> Subespecie </li>
+								</ul>
+							</td>
+							<td class="table-light col-md-2">
+								<ul class="list-group">
+									<li class="list-group-item"> {{ t.dominio }} </li>
+									<li class="list-group-item"> {{ t.reino }} </li>
+									<li class="list-group-item"> {{ t.subreino }} </li>
+									<li class="list-group-item"> {{ t.superfilo }} </li>
+									<li class="list-group-item"> {{ t.filo }} </li>
+									<li class="list-group-item"> {{ t.subfilo }} </li>
+									<li class="list-group-item"> {{ t.superclase }} </li>
+									<li class="list-group-item"> {{ t.clase }} </li>
+									<li class="list-group-item"> {{ t.subclase }} </li>
+									<li class="list-group-item"> {{ t.orden }} </li>
+									<li class="list-group-item"> {{ t.familia }} </li>
+									<li class="list-group-item"> {{ t.genero }} </li>
+									<li class="list-group-item"> {{ t.especie }} </li>
+									<li class="list-group-item"> {{ t.subespecie }} </li>
+								</ul>
+							</td>
+							<td>
+								<p> Pais(es): {{ t.pais }} </p>
+								<p> Otro(s) nombre(s): {{ t.apodo }} </p>
+								<p> Descripción: {{ t.descripcion }} </p>
+								<p>
+									<table>
+										<tr>
+											{% if t.grado_amenaza == 5 %}
+												<td class="bg-primary">Sobrepoblación: riesgo de invadir/desplazar otros ecosistemas</td>
+											{% elif t.grado_amenaza == 4 %}
+												<td class="bg-success">Estabilidad: Poco riesgo de ser invasora/estar bajo amenaza</td>
+											{% elif t.grado_amenaza == 3 %}
+												<td class="bg-info">Peligro menor: Población con poco crecimiento/descenso</td>
+											{% elif t.grado_amenaza == 2 %}
+												<td class="bg-warning">Peligro alto: Población en descenso</td>
+											{% elif t.grado_amenaza == 1 %}
+												<td class="bg-danger">¡Especie en peligro de extinción!</td>
+											{% else %}
+												<td class="table-light">No hay datos disponibles</td>
+											{% endif %}
+										</tr>
+									</table>
+								</p>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				</table>
+
+				<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					{% if taxonomia.has_prev %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('general.generalApartado', page=taxonomia.prev_num) }}">Anterior</a>
+						</li>
+					{% else %}
+						<li class="page-item">
+							<a class="page-link btn disabled" href="#">Anterior</a>
+						</li>
+					{% endif %}
+	  
+					{% for page in taxonomia.iter_pages(left_edge=3, right_edge=3) %}
+						{% if page %}
+							{% if page==taxonomia.page %}
+								<li class="page-item active">
+									<a class="page-link" href="{{ url_for('general.generalApartado', page=page) }}">{{ page }}</a>
+								</li>
+							{% else %}
+								<li class="page-item">
+									<a class="page-link" href="{{ url_for('general.generalApartado', page=page) }}">{{ page }}</a>
+								</li>
+							{% endif %}
+	   
+						{% else %}
+							<li class="page-item disabled" id="example_ellipsis"><a href="#" class="page-link">…</a></li> 
+						{% endif %}
+					{% endfor %}
+ 
+					{% if taxonomia.has_next %}
+						<li class="page-item"> 
+							<a class="page-link" href="{{ url_for('general.generalApartado', page=taxonomia.next_num) }}">Siguiente</a>
+						</li>
+					{% else %}
+						<li class="page-item">
+							<a class="page-link btn disabled" href="#">Siguiente</a>
+						</li>
+					{% endif %}
+				</ul>
+				</nav>
+			</div>
+			<div class="col-md-4">
+				<div class="container-fluid" style="border:1px solid #cecece;">
+					<p>
+						<h3>Filtrar por palabras</h3>  
+					</p>
+					<strong>Ingresado: {{tag}}</strong>
+					<br>
+					<form action="" method="post" autocomplete="off"> 
+						<br>
+						<input type="text" class="form-control" name="tag" id="tag"  placeholder="Palabras clave"/> 
+						<br>
+						<input type="submit" value="Buscar" class="form-control btn btn-primary" name=""> 
+					</form> 
+					<br><br>
+				</div>
+				<div class="container-fluid" style="border:1px solid #cecece;" align="center">
+					<p>
+						<h3>¿Quieres agregar otra especie?</h3>
+					</p>
+					<a href="{{ url_for('general.peticion_taxonomia') }}" class="btn btn-primary">Agregar especie</a>
+					<br><br>
+				</div>
+			</div> 
+		</div>
+	</div>
+  	<br><br><br><br><br><br>
+{% endblock content %}
+
+
+

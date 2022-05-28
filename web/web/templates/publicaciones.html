@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1 style = "text-align: center;color: black"> Publicaciones de la comunidad </h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="content-section">
+					<div align="center">
+						<a class="btn btn-outline-info btn-lg" href="{{ url_for('publicaciones_modelo.nueva_publicacion') }}">
+							<i class="fa fa-pencil"></i>
+							<b> Nueva publicación </b> 
+						</a>
+					</div>
+					<br>
+					{% for publicacion in publicaciones.items %}
+	   					<article class="media content-section">
+							<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + publicacion.author.foto_perfil) }}">
+		  					<div class="media-body">
+								<div class="article-metadata">
+
+									Por: 
+			  						<b><a class="mr-2" href="{{ url_for('usuarios.publicaciones_usuario', nombre_usuario=publicacion.author.nombre_usuario) }}">
+			  							{{ publicacion.author.nombre_usuario }}
+			  						</a></b>
+
+			  						{% if current_user.tiene_voto(publicacion) %}
+    									<a href="{{ url_for('publicaciones.like_action', id_publicacion=publicacion.id, action='unlike') }}" class="btn btn-outline-danger btn-sm mb-2">
+    										<b><i class="fa fa-minus"></i> <i class="fa fa-heart"></i></b>
+    									</a>
+  									{% else %}
+   			 							<a href="{{ url_for('publicaciones.like_action', id_publicacion=publicacion.id, action='like') }}" class="btn btn-outline-success btn-sm mb-2">
+   			 								<b><i class="fa fa-plus"></i> <i class="fa fa-heart-o"></i></b>
+   			 							</a>
+  									{% endif %}
+  									{% if publicacion.votos.count() > 1 %}
+										<b>{{ publicacion.votos.count() }} Votos</b>
+									{% elif publicacion.votos.count() == 1 %}
+										<b>{{ publicacion.votos.count() }} Voto</b>
+									{% elif publicacion.votos.count() == 0 %}
+										<b>Sin votos</b>
+									{% endif %}
+  									<b> | </b>		
+  									<small class="text-muted">
+  										Fecha: {{ publicacion.fecha_publicacion.strftime('%Y-%m-%d') }}
+  									</small>
+								</div>
+								<h2>
+									<a class="article-title" href="{{ url_for('publicaciones_modelo.publicacion', id_publicacion=publicacion.id) }}">
+										{{ publicacion.titulo }}
+									</a>
+								</h2>
+								
+		  					</div>
+						</article>
+					{% endfor %}
+					{% for page_num in publicaciones.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+	  					{% if page_num %}
+							{% if publicaciones.pagina == page_num %}
+		  						<a class="btn btn-info mb-4" href="{{ url_for('publicaciones.publicacionesApartado', page=page_num) }}">
+		  							{{ page_num }}
+		  						</a>
+							{% else %}
+		  						<a class="btn btn-outline-info mb-4" href="{{ url_for('publicaciones.publicacionesApartado', page=page_num) }}">
+		  							{{ page_num }}
+		  						</a>
+							{% endif %}
+	 	 				{% else %}
+			 				...
+	 				 	{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="container-fluid" style="border:1px solid #cecece;">
+					<p>
+						<h3>Filtrar por titulo</h3>  
+					</p>
+					<strong>Ingresado: {{tag}}</strong>
+					<br>
+					<form action="" method="post" autocomplete="off"> 
+						<br>
+						<input type="text" class="form-control" name="tag" id="tag"  placeholder="Palabras clave"/> 
+						<br>
+						<input type="submit" value="Buscar" class="form-control btn btn-primary" name="">
+						<br><br>
+					</form> 
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br><br><br>
+{% endblock content %}

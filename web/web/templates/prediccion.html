@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+	
+    <div class = "second-main" style = "height: 100% , width : 100%;">
+        <div class = "header">
+            <row style = "width: 100% ; display: flex; justify-content: center;">
+                <h3 class="header-text">Imágen publicada</h3>
+            </row>
+            <row style = "width: 100% ; display: flex; justify-content: center;">
+                <img class = "result-img" src="{{url_for('static', filename = 'images/'+ img)}}">
+            </row>
+        </div>
+
+        <div class = "info">
+            <row style = "width: 100% ; display: flex; justify-content: center;">
+                <h3 class = "header-text">Especie/Subespecie: {{ predicciones.clase1 }}</h3>
+            </row>
+
+            <h3> Otras predicciones de la red neuronal </h3>
+
+            <row style = "width: 100%; display: flex; justify-content: center;">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Rango</th>
+                        <th>Especie/Subespecie</th>
+                        <th>Probabilidad</th>
+                    </tr>
+                    <tr class="table-success">
+                        <td>Primera opción</td>
+                        <td>{{ predicciones.clase1 }}</td>
+                        <td>{{ predicciones.probabilidad1 }} %</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td>Segunda opción</td>
+                        <td>{{ predicciones.clase2 }}</td>
+                        <td>{{ predicciones.probabilidad2 }} %</td>                   
+                    </tr>                
+                    <tr class="table-danger">
+                        <td>tercera opción</td>
+                        <td>{{ predicciones.clase3 }}</td>
+                        <td>{{ predicciones.probabilidad3 }} %</td>
+                    </tr>
+                </table>
+            </row>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+{% endblock %}

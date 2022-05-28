@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	<h1 style = "text-align: center;color: black"> Busqueda Inteligente </h1>
+	<h3 style = "text-align: center;"> Utilizando una red neuronal convolucional (CNN) </h3>
+
+	<div class="content">
+		<div class = "index-main">
+			<div class="upload-section">
+				<table class="table table-borderless">
+					<div class="upload-file">
+						<tr>
+							<form class = "file-form" action="{{ url_for('busqueda_inteligente.prediccion') }}" method="post", enctype="multipart/form-data">
+								<td align="center">
+									<input class="file-form-input" type="file" , name="file"/>
+								</td>
+								<td align="center">
+									<button class="btn btn-success btn-lg">Subir imágen</button>
+								</td>
+							</form>
+						</tr>
+					</div>
+					<div>
+						<tr>
+							<td colspan="2" align="center">
+								<span><b>ó también</b></span>
+							</td>
+						</tr>
+					</div>
+					<div class="upload-link">
+						<tr>
+							<form class = "link-form" action="{{ url_for('busqueda_inteligente.prediccion') }}" method="post", enctype="multipart/form-data">
+								<td align="center">
+									<input class="link-form-input" width="100" type="text", maxlength="1000" , name = "link" placeholder="Pega el link de la imagen que quieres predecir"/>
+								</td>
+								<td align="center">
+									<button class="btn btn-success btn-lg">Procesar link</button>
+								</td>
+							</form>
+						</tr>
+					</div>
+					<div class = "header-content-sub">
+						<tr>
+							<td colspan="2">
+								<p style = "text-align: center; margin-top: 15px;color: red" class="header-content-info">
+									{{error}}
+								</p>
+							</td>
+						</tr>
+					</div>
+				</table>
+			</div>
+			<div>
+				<div>
+					<p>
+						El modelo ha sido entrendado con mas de 1000 imagenes de distintos reptiles, aún existen pequeñas posibilidades de que haya resultados imprecisos
+					</p>
+				</div>
+			</div>
+
+		</div>  
+	</div>
+	<br><br><br><br><br><br>
+{% endblock content %}

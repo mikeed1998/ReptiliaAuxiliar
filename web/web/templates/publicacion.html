@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	<article class="media content-section">
+		<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + publicacion.author.foto_perfil) }}">
+		<div class="media-body">
+			<div class="article-metadata">
+				<a class="mr-2" href="{{ url_for('usuarios.publicaciones_usuario', nombre_usuario=publicacion.author.nombre_usuario) }}">
+					{{ publicacion.author.nombre_usuario }}
+				</a>
+				{% if publicacion.votos.count() > 1 %}
+					<b>{{ publicacion.votos.count() }} Votos</b>
+				{% elif publicacion.votos.count() == 1 %}
+					<b>{{ publicacion.votos.count() }} Voto</b>
+				{% elif publicacion.votos.count() == 0 %}
+					<b>Sin votos</b>
+				{% endif %}
+				<b> | </b>	
+				<small class="text-muted">{{ publicacion.fecha_publicacion.strftime('%Y-%m-%d') }}</small>
+				{% if publicacion.author == current_user %}
+					<div>
+						<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('publicaciones_modelo.actualizar_publicacion', id_publicacion=publicacion.id) }}">
+							<i class="fa fa-edit"></i> Actualizar
+						</a>
+						<button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+							<i class="fa fa-eraser"></i> Eliminar
+						</button>
+					</div>
+				{% endif %}
+			</div>
+			<h2 class="article-title">{{ publicacion.titulo }}</h2>
+			<p class="article-content">{{ publicacion.contenido }}</p>
+		</div>
+	</article>
+	<!-- Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">¿Deseas eliminar la publicación?</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<form action="{{ url_for('publicaciones_modelo.eliminar_publicacion', id_publicacion=publicacion.id) }}" method="POST">
+						<input class="btn btn-danger" type="submit" value="Eliminar">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br><br><br>
+{% endblock content %}

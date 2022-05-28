@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+	
+	<h1 class="mb-3">Publicaciones de {{ usuario.nombre_usuario }} ({{ publicaciones.total }})</h1>
+	
+	{% for publicacion in publicaciones.items %}
+		<article class="media content-section">
+		  	<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + publicacion.author.foto_perfil) }}">
+		  	<div class="media-body">
+				<div class="article-metadata">
+			  		<a class="mr-2" href="{{ url_for('usuarios.publicaciones_usuario', nombre_usuario=publicacion.author.nombre_usuario) }}">{{ publicacion.author.nombre_usuario }}</a>
+			  		{% if publicacion.votos.count() > 1 %}
+						<b>{{ publicacion.votos.count() }} Votos</b>
+					{% elif publicacion.votos.count() == 1 %}
+						<b>{{ publicacion.votos.count() }} Voto</b>
+					{% elif publicacion.votos.count() == 0 %}
+						<b>Sin votos</b>
+					{% endif %}
+			  		<b> | </b>	
+			  		<small class="text-muted">{{ publicacion.fecha_publicacion.strftime('%Y-%m-%d') }}</small>
+				</div>
+				<h2>
+					<a class="article-title" href="{{ url_for('publicaciones_modelo.publicacion', id_publicacion=publicacion.id) }}">{{ publicacion.titulo }}</a></h2>
+			</div>
+		</article>
+	{% endfor %}
+	
+	{% for page_num in publicaciones.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+	  	{% if page_num %}
+			{% if publicaciones.page == page_num %}
+		  		<a class="btn btn-info mb-4" href="{{ url_for('usuarios.publicaciones_usuario', nombre_usuario=usuario.nombre_usuario, page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+		  		<a class="btn btn-outline-info mb-4" href="{{ url_for('users.user_posts', nombre_usuario=usuario.nombre_usuario, page=page_num) }}">{{ page_num }}</a>
+			{% endif %}
+	  	{% else %}
+			...
+	  	{% endif %}
+	{% endfor %}
+	<br><br><br><br><br><br>
+{% endblock content %}

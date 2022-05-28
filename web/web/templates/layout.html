@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	{% if title %}
+			<title>Reptilia Auxiliar - {{ title }}</title>
+	{% else %}
+			<title>Reptilia Auxiliar</title>
+	{% endif %}
+
+</head>
+<body>
+	<header class="site-header">
+		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+			<div class="container">
+				<h1>
+					<a class="navbar-brand mr-6" href="/">Reptilia auxiliar</a>
+				</h1>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarToggle">
+					{% if current_user.is_authenticated %}
+						<div class="navbar-nav mr-auto">
+							<a class="nav-item nav-link" href="{{ url_for('main.index') }}">Inicio</a>
+							<a class="nav-item nav-link" href="{{ url_for('main.acercade') }}">Acerca de</a>
+						</div>
+					{% endif %}
+					<!-- Navbar Right Side -->
+					<div class="navbar-nav">
+						{% if current_user.is_authenticated %}
+							<a class="nav-item nav-link lg" href="{{ url_for('usuarios.cuenta') }}">
+								Mi cuenta
+							</a>
+							<a class="nav-item nav-link" href="{{ url_for('usuarios.salir') }}">Salir</a>
+						{% else %}
+							<a class="nav-item nav-link" href="{{ url_for('usuarios.login') }}">Ingresar</a>
+							<a class="nav-item nav-link" href="{{ url_for('usuarios.register') }}">Registrarse</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<br>
+	{% if current_user.is_authenticated %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<a class="btn btn-outline-info mb-4 btn-lg btn-block" href="{{ url_for('general.generalApartado') }}">
+						<i class="fa fa-database"></i>
+						General
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a class="btn btn-outline-info mb-4 btn-lg btn-block" href="{{ url_for('publicaciones.publicacionesApartado') }}">
+						<i class="fa fa-users"></i>
+						Publicaciones <br> 
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a class="btn btn-outline-info mb-3 btn-lg btn-block" href="{{ url_for('busqueda_inteligente.principal_busqueda_inteligente') }}">
+						<i class="fa fa-eye"></i>Busqueda Inteligente
+					</a>
+				</div>
+				<div class="col-md-3">
+					<a class="btn btn-outline-info mb-4 btn-lg btn-block" href="{{ url_for('legislacion.leg_in') }}">
+						<i class="fa fa-legal"></i>
+						Legislación
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+	{% else %}
+		<div class="container">
+		</div>
+	{% endif %}
+
+	<main role="main" class="container">
+		<div class="row">
+			<div class="col-md-12">
+				{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+						{% for category, message in messages %}
+							<div class="alert alert-{{ category }}">
+								{{ message }}
+							</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+
+				{% block content %}
+				{% endblock %}
+
+			</div>
+		</div>
+	</main>
+
+	<footer class="text-center text-white fixed-bottom footer" style="background-color: #21081a;">
+  	<!-- Grid container -->
+  		<div class="container p-2"></div>
+  		<!-- Grid container -->
+		<!-- Copyright -->
+  		<div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+    		© 2021 
+    		<a class="text-white" href="https://mdbootstrap.com/">Reptilia Auxiliar</a>
+  		</div>
+  		<!-- Copyright -->
+	</footer>
+
+
+	<!-- Si utilizamos componentes de Bootstrap que requieran Javascript agregar estos tres archivos -->
+	<!--
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	//-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!--
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	//-->
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="content-section">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4"> Nueva Taxonomia/Descripción</legend>
+				<div class="form-group">
+					{{ form.orden.label(class="form-control-label") }}
+					{% if form.orden.errors %}
+                    	{{ form.orden(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.orden.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.orden(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.familia.label(class="form-control-label") }}
+					{% if form.familia.errors %}
+                    	{{ form.familia(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.familia.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.familia(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.genero.label(class="form-control-label") }}
+					{% if form.genero.errors %}
+                    	{{ form.genero(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.genero.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.genero(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.especie.label(class="form-control-label") }}
+					{% if form.especie.errors %}
+                    	{{ form.especie(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.especie.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.especie(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.subespecie.label(class="form-control-label") }}
+					{% if form.subespecie.errors %}
+                    	{{ form.subespecie(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.subespecie.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.subespecie(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.descripcion.label(class="form-control-label") }}
+					{% if form.descripcion.errors %}
+                    	{{ form.descripcion(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.descripcion.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.descripcion(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.tipo.label(class="form-control-label") }}
+					{% if form.tipo.errors %}
+                    	{{ form.tipo(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.tipo.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.tipo(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.apodo.label(class="form-control-label") }}
+					{% if form.apodo.errors %}
+                    	{{ form.apodo(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.apodo.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.apodo(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.grado_amenaza.label(class="form-control-label") }}
+					{% if form.grado_amenaza.errors %}
+                    	{{ form.grado_amenaza(class="form-control form-control-lg is-invalid") }}
+                    	<div class="invalid-feedback">
+                        	{% for error in form.grado_amenaza.errors %}
+                            	<span> {{ error }} </span>
+                        	{% endfor %}
+                    	</div> 
+                	{% else %}
+                    	{{ form.grado_amenaza(class="form-control form-control-lg") }}
+                	{% endif %}
+				</div>
+				<div class="form-group" align="center">
+					{{ form.enviar(class="btn btn-outline-info") }}
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<br><br><br><br><br><br>
+{% endblock content %}
